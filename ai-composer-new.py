@@ -17,8 +17,8 @@ print 'Extracting all of pattern[1]'
 # Instantiate a MIDI Pattern (contains a list of tracks)
 pat = midi.Pattern()
 
-#folder_trans = 'training-songs'
-folder_trans = 'midi'
+folder_trans = 'training-songs'
+#folder_trans = 'training-wide-note'
 #folder_trans = 'training-video-test'
 #folder_trans = 'training-kid-songs'
 #folder_trans = 'training-classical-songs'
@@ -96,26 +96,15 @@ def tranverse_all_folders(folder_trans):
             #track.append(midi.NoteOnEvent(tick= tick, channel=1, data=[pitch, velocity]))
             i = i + 1
         j = j + 1
+    return pattern, tick_ar, velocity_ar, pitch_ar
 
-        if j == start_val:
-            wholetick_ar = np.array(tick_ar)
-            wholepitch = np.array(pitch_ar)
-            wholevelocity = np.array(velocity_ar)
-        else:
-            wholetick_ar = np.concatenate([wholetick_ar,tick_ar])
-            wholepitch = np.concatenate([wholepitch,pitch_ar])
-            wholevelocity = np.concatenate([wholevelocity,velocity_ar])
-
-    #return pattern, tick_ar, pitch_ar, velocity_ar
-    return pattern, wholetick_ar, wholepitch, wholevelocity
 
 
 
 # Go through all folders and form the matrix
 pattern, tick_ar, velocity_ar, pitch_ar = tranverse_all_folders(folder_trans)
 
-print 'Tick_ar: ', tick_ar
-print 'tick_ar.shape:', tick_ar.shape
+
 
 print 'Converting data to list. . .'
 
@@ -292,9 +281,9 @@ for (sample, target) in ds.getSequenceIterator(0):
     
     
     
-    #print '               sample = ', sample
+    print '               sample = ', sample
     print 'predicted next sample = ', pitch_n, ' ', velocity_n, ' ', tick_n 
-    #print '   actual next sample = ', target
+    print '   actual next sample = ', target
     print ''
 
     # Part of code used to have generator predict based on its own prev notes

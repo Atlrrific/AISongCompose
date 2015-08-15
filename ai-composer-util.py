@@ -17,8 +17,8 @@ print 'Extracting all of pattern[1]'
 # Instantiate a MIDI Pattern (contains a list of tracks)
 pat = midi.Pattern()
 
-#folder_trans = 'training-songs'
-folder_trans = 'training-wide-note'
+folder_trans = 'training-songs'
+#folder_trans = 'training-wide-note'
 #folder_trans = 'training-video-test'
 #folder_trans = 'training-kid-songs'
 #folder_trans = 'training-classical-songs'
@@ -281,9 +281,9 @@ for (sample, target) in ds.getSequenceIterator(0):
     
     
     
-    #print '               sample = ', sample
+    print '               sample = ', sample
     print 'predicted next sample = ', pitch_n, ' ', velocity_n, ' ', tick_n 
-    #print '   actual next sample = ', target
+    print '   actual next sample = ', target
     print ''
 
     # Part of code used to have generator predict based on its own prev notes
