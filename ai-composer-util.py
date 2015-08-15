@@ -91,7 +91,7 @@ def tranverse_all_folders(folder_trans):
             else:
                 tick_ar = np.concatenate((tick_ar, tick))
                 pitch_ar = np.concatenate((pitch_ar, pitch))
-                velocity_ar = np.concatenate((velocity_ar, tick))
+                velocity_ar = np.concatenate((velocity_ar, velocity))
             # To reconstruct the entire song in its (piano-like) original form
             #track.append(midi.NoteOnEvent(tick= tick, channel=1, data=[pitch, velocity]))
             i = i + 1
