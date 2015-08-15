@@ -5,7 +5,7 @@ import os
 import os.path
 
 #path = 'example.mid'
-#path = 'Songs/Suteki-Da-Ne.mid'
+path = 'midiFiles/Suteki-Da-Ne.mid'
 #path = 'Songs/Mozart-Movement.mid'
 #path = 'Songs/beethoven_ode_to_joy.mid'
 #path = 'Songs/twinkle_twinkle.mid'
@@ -18,7 +18,7 @@ print 'Extracting all of pattern[1]'
 pat = midi.Pattern()
 
 #folder_trans = 'training-songs'
-folder_trans = 'midi'
+folder_trans = 'midiFiles'
 #folder_trans = 'training-video-test'
 #folder_trans = 'training-kid-songs'
 #folder_trans = 'training-classical-songs'
@@ -44,7 +44,10 @@ def pitch_prev_array_add(pitch, pitch_ar):
     return pitch_ar
 
 def tranverse_all_folders(folder_trans):
-    j = 0
+    j = 1
+    wholetick_ar = np.array([])
+    wholepitch = np.array([])
+    wholevelocity = np.array([])
     for path in os.listdir(folder_trans):
         pattern = midi.read_midifile(folder_trans + slash + path)
         print folder_trans + slash + path
@@ -68,6 +71,9 @@ def tranverse_all_folders(folder_trans):
         tr = 1
         start_val = 1
         i = 1
+        tick_ar = np.array([])
+        pitch_ar = np.array([])
+        velocity_ar = np.array([])
         while True:
             #if i > len(pattern[tr]) - 2:
             if i > len(pattern[tr]) - 2:
@@ -95,17 +101,23 @@ def tranverse_all_folders(folder_trans):
             # To reconstruct the entire song in its (piano-like) original form
             #track.append(midi.NoteOnEvent(tick= tick, channel=1, data=[pitch, velocity]))
             i = i + 1
-        j = j + 1
 
         if j == start_val:
+            print 'inside if whole'
             wholetick_ar = np.array(tick_ar)
             wholepitch = np.array(pitch_ar)
             wholevelocity = np.array(velocity_ar)
         else:
+            print 'inside else whole'
             wholetick_ar = np.concatenate([wholetick_ar,tick_ar])
             wholepitch = np.concatenate([wholepitch,pitch_ar])
             wholevelocity = np.concatenate([wholevelocity,velocity_ar])
 
+        j = j + 1
+        print 'Tick_ar: ', tick_ar
+        print 'tick_ar.shape:', tick_ar.shape
+        print 'wholetick_ar: ', wholetick_ar
+        print 'wholetick_ar.shape:', wholetick_ar.shape
     #return pattern, tick_ar, pitch_ar, velocity_ar
     return pattern, wholetick_ar, wholepitch, wholevelocity
 
@@ -114,8 +126,8 @@ def tranverse_all_folders(folder_trans):
 # Go through all folders and form the matrix
 pattern, tick_ar, velocity_ar, pitch_ar = tranverse_all_folders(folder_trans)
 
-print 'Tick_ar: ', tick_ar
-print 'tick_ar.shape:', tick_ar.shape
+print 'Returned Tick_ar: ', tick_ar
+print 'Returned tick_ar.shape:', tick_ar.shape
 
 print 'Converting data to list. . .'
 
