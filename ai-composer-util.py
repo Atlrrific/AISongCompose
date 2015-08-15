@@ -5,11 +5,11 @@ import os
 import os.path
 
 #path = 'example.mid'
-#path = 'Songs/Suteki-Da-Ne.mid'
-#path = 'Songs/Mozart-Movement.mid'
-#path = 'Songs/beethoven_ode_to_joy.mid'
-#path = 'Songs/twinkle_twinkle.mid'
-#path = 'Songs/grenade.mid
+#path = 'song-database/Suteki-Da-Ne.mid'
+#path = 'song-database/Mozart-Movement.mid'
+#path = 'song-database/beethoven_ode_to_joy.mid'
+#path = 'song-database/twinkle_twinkle.mid'
+#path = 'song-database/grenade.mid
 
 slash = '/'
 
