@@ -48,7 +48,7 @@ slash = '/'
 
 # Extract the first 30 elements of the data vector, then convert to list
 
-window_len = 50
+window_len = 1000
 
 #window_len = 100
 
