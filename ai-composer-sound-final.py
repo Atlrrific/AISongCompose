@@ -48,7 +48,8 @@ slash = '/'
 
 # Extract the first 30 elements of the data vector, then convert to list
 
-window_len = 300
+window_len = 50
+
 #window_len = 100
 
 fre_data = np.real(data_r.flatten()[:window_len]).tolist()
@@ -141,13 +142,31 @@ stream = p.open(format = p.get_format_from_width(1),
                 output = True)
 #timePeriod = (60*6 + 1)/size
 
+f = open('workfile.txt', 'w')
+sequence = "["
 i = 0
 for (sample, target) in ds.getSequenceIterator(0):
 
     pred = net.activate(sample)
-
     WAVEDATA = add_note(pred, 0.08)
     stream.write(WAVEDATA)
+
+    if (int(pred[0]) < 10) and (int(pred[0]) > -10):
+        sequence = sequence + "0" + ", "
+    else:
+        if (int(pred[0])>3000) :
+            sequence = sequence + str (int(pred[0])-2400) + ", "
+        else: 
+            if (int(pred[0])>2000) and (int(pred[0])<3000):
+                 sequence = sequence + str (int(pred[0])-1600) + ", "
+            else:
+                if (int(pred[0])>1000) and (int(pred[0])<2000):
+                    equence = sequence + str (int(pred[0])-1600) + ", "
+                else:
+                    sequence = sequence + str (int(pred[0])) + ", "
+
+sequence = sequence + "]"
+f.write(sequence)
 
 stream.stop_stream()
 stream.close()
