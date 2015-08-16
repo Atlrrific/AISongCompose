@@ -2,14 +2,16 @@ import numpy as np
 import scipy.io.wavfile as wav
 import matplotlib.pyplot as plt
  
-data = wav.read("drum_loop_01.wav")[1]
+data = wav.read("lul.wav")[1]
 data = np.fft.fft(data)
+size = data.shape[0]
+print 'size: ', data.shape[0]
 print data
 print 'Reducing data. . .'
 
 # Restrict size of input 
-size_red = 300000 
-data_r = data[:size_red]
+size_red = 3000 
+data_r = data#[:size_red]
 print 'size: ', data_r.shape
 
 
@@ -44,32 +46,73 @@ WAVEDATA = ''
 # 		print data[i]
 # 		j = j +1
 # 	i = i + 1
-import json
-with open('data.txt', 'w') as outfile:
-    json.dump(data_real, outfile)
+
+# print data_real.shape
+# i = 0
+# while i < data_real.shape[0]:
+# 	WAVEDATA = WAVEDATA+chr(int(math.sin(size_red/((BITRATE/data_real[i][0]*100)/math.pi))*127+128))   
+# 	print data_real[i][0] 
+# 	i = i +1
 
 
-print data_real.shape
-i = 0
-while i < data_real.shape[0]:
-	WAVEDATA = WAVEDATA+chr(int(math.sin(size_red/((BITRATE/data_real[i][0]*100)/math.pi))*127+128))   
-	print data_real[i][0] 
-	i = i +1
+import math
+import pyaudio
 
-print data_real.shape
+#sudo apt-get install python-pyaudio
+PyAudio = pyaudio.PyAudio
 
- #WAVEDATA = WAVEDATA+chr(int(math.sin(x/((BITRATE/x[1])/math.pi))*127+128))    
+#See http://en.wikipedia.org/wiki/Bit_rate#Audio
+BITRATE = 16000 #number of frames per second/frameset.      
 
-#fill remainder of frameset with silence
-for x in xrange(RESTFRAMES): 
- WAVEDATA = WAVEDATA+chr(128)
+#See http://www.phy.mtu.edu/~suits/notefreqs.html
+'''
+FREQUENCY = 1000.63 #Hz, waves per second, 261.63=C4-note.
+LENGTH = 5.2232 #seconds to play sound
+'''
+
+def add_note(FREQUENCY, LENGTH):
+    NUMBEROFFRAMES = int(BITRATE * LENGTH)
+    RESTFRAMES = NUMBEROFFRAMES % BITRATE
+    WAVEDATA = ''    
+
+    for x in xrange(NUMBEROFFRAMES):
+     WAVEDATA = WAVEDATA+chr(int(math.sin(x/((BITRATE/FREQUENCY)/math.pi))*127+128))    
+
+    #fill remainder of frameset with silence
+    for x in xrange(RESTFRAMES): 
+     WAVEDATA = WAVEDATA+chr(128)
+
+    return WAVEDATA
 
 p = PyAudio()
 stream = p.open(format = p.get_format_from_width(1), 
                 channels = 1, 
                 rate = BITRATE, 
                 output = True)
-stream.write(WAVEDATA)
+
+# WAVEDATA = add_note(1000.63, 0.2232)
+# stream.write(WAVEDATA)
+# WAVEDATA = add_note(2000.63, 0.2232)
+# stream.write(WAVEDATA)
+# WAVEDATA = add_note(3000.63, 0.2232)
+# stream.write(WAVEDATA)
+# WAVEDATA = add_note(1000.63, 0.2232)
+# stream.write(WAVEDATA)
+
+timePeriod = (60*6 + 1)/size
+print data_real.shape
+i = 0
+while i < data_real.shape[0]:
+	# WAVEDATA = WAVEDATA+chr(int(math.sin(size_red/((BITRATE/data_real[i][0]*100)/math.pi))*127+128))   
+	WAVEDATA = add_note(data_real[i][0], 0.002226582)
+	stream.write(WAVEDATA)
+	#print data_real[i][0] 
+	i = i +1
+
+
+
 stream.stop_stream()
 stream.close()
 p.terminate()
+
+
