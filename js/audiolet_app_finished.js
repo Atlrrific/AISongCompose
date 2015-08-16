@@ -7,7 +7,7 @@ function playExample() {
                                           frequency);
 
         this.gain = new Gain(this.audiolet);
-        this.envelope = new PercussiveEnvelope(this.audiolet, 1, 0.2, 0.1,
+        this.envelope = new PercussiveEnvelope(this.audiolet, 1, 0.2, 0.5,
             function() {
                 this.audiolet.scheduler.addRelative(0, this.remove.bind(this));
             }.bind(this)
