@@ -3,12 +3,12 @@ import wave
 import sys
 
 CHUNK = 1024
-
+'''
 if len(sys.argv) < 2:
     print("Plays a wave file.\n\nUsage: %s test.wav" % sys.argv[0])
     sys.exit(-1)
-
-wf = wave.open(sys.argv[1], 'rb')
+'''
+wf = wave.open('test.wav', 'rb')
 
 p = pyaudio.PyAudio()
 
