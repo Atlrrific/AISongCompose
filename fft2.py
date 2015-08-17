@@ -2,8 +2,10 @@ import numpy as np
 import scipy.io.wavfile as wav
 import matplotlib.pyplot as plt
  
-data = wav.read("lul.wav")[1]
+data = wav.read("drum_loop_01.wav")[1]
+print data.shape
 data = np.fft.fft(data)
+print data.shape
 size = data.shape[0]
 print 'size: ', data.shape[0]
 print data
@@ -104,7 +106,8 @@ print data_real.shape
 i = 0
 while i < data_real.shape[0]:
 	# WAVEDATA = WAVEDATA+chr(int(math.sin(size_red/((BITRATE/data_real[i][0]*100)/math.pi))*127+128))   
-	WAVEDATA = add_note(data_real[i][0], 0.002226582)
+	WAVEDATA = add_note(data_real[i][0], 0.062226582)
+	print data_real[i][0]
 	stream.write(WAVEDATA)
 	#print data_real[i][0] 
 	i = i +1

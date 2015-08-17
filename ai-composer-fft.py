@@ -167,7 +167,7 @@ for (sample, target) in ds.getSequenceIterator(0):
     print '   actual next sample = ', target
     print ''
 
-    WAVEDATA = add_note(pred[0], pred[1])
+    WAVEDATA = add_note(pred, 0.1)
     stream.write(WAVEDATA)
 
 stream.stop_stream()

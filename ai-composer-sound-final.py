@@ -30,21 +30,21 @@ def add_note(FREQUENCY, LENGTH):
 #data = wav.read("drum_loop_01.wav")[1]
 data = wav.read("lulBrahams2.wav")[1]
 data = np.fft.fft(data)
-print data
-print 'Reducing data. . .'
+#print data
+#print 'Reducing data. . .'
 size_red = 12176
 
 # Restricts the size of output
 data_r = data[:size_red]
 
-print 'size: ', data_r.shape
+#print 'size: ', data_r.shape
 
 slash = '/'
 
 
 
 
-print 'Converting data to list. . .'
+#print 'Converting data to list. . .'
 
 # Extract the first 30 elements of the data vector, then convert to list
 
@@ -53,7 +53,7 @@ window_len = 300
 
 fre_data = np.real(data_r.flatten()[:window_len]).tolist()
 
-print 'Data Converted'
+#print 'Data Converted'
 
 
 # Put time series into a supervised dataset, where the target for
@@ -81,7 +81,7 @@ for (sample, next_sample) in zip(fre_data, cycle(fre_data[1:])):
 from pybrain.tools.shortcuts import buildNetwork
 from pybrain.structure.modules import LSTMLayer
 
-print 'Constructing neutral network. . .'
+#print 'Constructing neutral network. . .'
 net = buildNetwork(
     INPUT,
     HIDDEN_LAYERS,
@@ -104,7 +104,7 @@ EPOCHS_PER_CYCLE = 5
 #CYCLES = 200
 CYCLES = 100
 EPOCHS = EPOCHS_PER_CYCLE * CYCLES
-print 'Entering loop. . .'
+#print 'Entering loop. . .'
 for i in xrange(CYCLES):
     # Does the training
     trainer.trainEpochs(EPOCHS_PER_CYCLE)
@@ -114,8 +114,8 @@ for i in xrange(CYCLES):
     print ('\r epoch {}/{}'.format(epoch, EPOCHS))
 
     stdout.flush()
-print 'Exit loop'
-print ''
+#print 'Exit loop'
+#print ''
 
 print 'final error =', train_errors[-1]
 
@@ -145,11 +145,6 @@ i = 0
 for (sample, target) in ds.getSequenceIterator(0):
 
     pred = net.activate(sample)
-
-    #print '               sample = ', sample
-    #print 'predicted next sample = ', pred
-    #print '   actual next sample = ', target
-    #print ''
 
     WAVEDATA = add_note(pred, 0.08)
     stream.write(WAVEDATA)

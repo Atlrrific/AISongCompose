@@ -8,7 +8,7 @@ PyAudio = pyaudio.PyAudio
 BITRATE = 16000 #number of frames per second/frameset.      
 
 #See http://www.phy.mtu.edu/~suits/notefreqs.html
-FREQUENCY = 161.63 #Hz, waves per second, 261.63=C4-note.
+FREQUENCY = 1000.63 #Hz, waves per second, 261.63=C4-note.
 LENGTH = 5.2232 #seconds to play sound
 
 NUMBEROFFRAMES = int(BITRATE * LENGTH)
