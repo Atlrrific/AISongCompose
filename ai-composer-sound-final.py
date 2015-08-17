@@ -48,7 +48,7 @@ slash = '/'
 
 # Extract the first 30 elements of the data vector, then convert to list
 
-window_len = 500
+window_len = 1000
 
 #window_len = 100
 
@@ -161,7 +161,7 @@ for (sample, target) in ds.getSequenceIterator(0):
                  sequence = sequence + str (int(pred[0])-1600) + ", "
             else:
                 if (int(pred[0])>1000) and (int(pred[0])<2000):
-                    sequence = sequence + str (int(pred[0])-1600) + ", "
+                    equence = sequence + str (int(pred[0])-1600) + ", "
                 else:
                     sequence = sequence + str (int(pred[0])) + ", "
 
@@ -172,7 +172,3 @@ stream.stop_stream()
 stream.close()
 p.terminate()
 print 'Finished prediction'
-
-                 
-                
-
